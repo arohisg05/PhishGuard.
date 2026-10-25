@@ -1,82 +1,79 @@
 # PhishGuard 🛡️
 
-PhishGuard is a machine learning project focused on identifying phishing websites using features from the PhiUSIIL Phishing URL Dataset.
+PhishGuard is a machine learning project that explores phishing website detection using URL patterns and domain reputation.
 
 ## What Is Phishing?
 
 Phishing is an online fraud technique where attackers use fake websites or links to trick people into sharing sensitive information, such as passwords or banking details.
 
-## Project Goals
+## Project Features
 
-- Understand and analyze a phishing dataset.
-- Clean data and study useful patterns.
-- Create features for machine learning.
-- Train and compare classification models.
-- Build a simple demo using a pure-Python inference engine.
-- Explore direct URL analysis as a future improvement.
+### 1. Check a URL
+Uses the production Random Forest model to analyze URL features and predict whether a URL looks phishing or legitimate.
+
+### 2. Experimental Hybrid Preview
+A separate research prototype compares character-pattern analysis with a domain-aware hybrid approach that considers domain reputation. It is experimental and should not be treated as a guarantee of website safety.
 
 ## Dataset
 
-This project uses the PhiUSIIL Phishing URL Dataset from the UCI Machine Learning Repository.
+The project began with the PhiUSIIL Phishing URL Dataset from the UCI Machine Learning Repository.
 
-The target labels used in this project are:
-
+Project label mapping:
 - 0 = Phishing
 - 1 = Legitimate
 
-## Machine Learning Workflow
+Additional experimental evaluation uses domain-separated data. Results should only be compared when their evaluation datasets and methods are clearly stated.
 
-1. Data understanding: inspect dataset shape, columns, data types, missing values, duplicates, and label distribution.
-2. Exploratory data analysis: examine URL length, HTTPS usage, and other feature patterns.
-3. Feature engineering: create additional features, including LongURL.
-4. Model training and comparison: evaluate Logistic Regression, Decision Tree, and Random Forest.
-5. Model export: export Random Forest decision trees to JSON for pure-Python inference.
-6. Demo development: create a Streamlit interface connected to the inference engine.
+## How It Works
 
-## Current Demo
-
-The current demo accepts 49 manually entered numerical features and returns a prediction with probabilities.
-
-**Important limitation:** The demo does not analyze raw URLs directly. The 49 feature values must be provided separately. Some features describe webpage content and structure and cannot be obtained from a URL string alone.
+1. Extract URL-related features or character patterns.
+2. Apply a trained machine learning model.
+3. Compare the model's score with its decision threshold.
+4. Display a phishing or legitimate prediction.
+5. Evaluate model behavior using precision, recall, F1-score, and false-positive and false-negative counts.
 
 ## Technology Stack
 
 - Python
-- Pandas and scikit-learn for data analysis and model development
-- Streamlit for the demo interface
-- Pure Python for model inference
-- Git and GitHub for version control
+- Machine learning and feature engineering
+- Pure-Python inference
+- Streamlit
+- JSON model artifacts
+- Git and GitHub
+
+## Run Locally
+
+Create and activate a Python virtual environment, then install dependencies:
+
+```bash
+pip install -r requirements.txt
+python -m streamlit run app.py
+```
+
+Run the commands from the project root. Confirm that the required model files and local reputation data are present.
 
 ## Project Structure
 
-- data/ — Dataset documentation
-- docs/ — Daily progress and learning notes
-- notebooks/ — Data analysis notebook
-- src/ — Pure-Python inference engine
-- models/ — Exported model trees and benchmark samples
-- tests/ — Automated engine tests
-- app.py — Streamlit demo interface
-- requirements.txt — Python dependencies
+- `data/` — Dataset documentation and supporting data
+- `docs/` — Project progress and learning notes
+- `notebooks/` — Data analysis notebooks
+- `src/` — Feature extraction and inference code
+- `models/` — Model artifacts and benchmark files
+- `tests/` — Automated tests
+- `app.py` — Streamlit application
+- `requirements.txt` — Python dependencies
 
-## Running the Demo Locally
+## Limitations
 
-1. Set up a Python virtual environment.
-2. Install dependencies from requirements.txt.
-3. Run this command from the project root:
-
-    python -m streamlit run app.py
-
-The file models/phishguard_trees.json must be available in the expected location.
-
-## Future Improvements
-
-- Develop a reliable URL and webpage feature-extraction pipeline.
-- Explore a separate model using only features available directly from a URL.
-- Test with more representative samples.
-- Add clearer explanations of predictions.
+- HTTPS does not prove a website is legitimate; phishing websites can also use HTTPS.
+- Domain reputation can become outdated as websites change.
+- New domains may not appear in a static reputation list.
+- Experimental results do not guarantee real-world detection performance.
+- A legitimate website may be flagged incorrectly, and a phishing website may be missed.
+- Model scores are estimates, not guarantees of safety.
 
 ## Project Status
 
-The repository includes data analysis, feature engineering, model inference code, benchmark samples, automated tests, and a basic demo interface. The demo still needs local testing and validation.
+PhishGuard includes a production URL-classification path and a separate experimental hybrid preview. Model evaluation and real-world testing are ongoing.
 
-**Note:** Performance on a dataset does not guarantee the same performance on real-world websites.
+This project is for educational and research purposes. Always verify suspicious websites independently before entering sensitive information.
